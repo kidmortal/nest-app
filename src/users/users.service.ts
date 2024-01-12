@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
+  private users: User[] = [];
   create(createUserDto: CreateUserDto) {
+    this.users.push(createUserDto);
     return {
       message: 'created',
       data: createUserDto,
@@ -12,7 +15,7 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.users;
   }
 
   findOne(id: number) {
