@@ -1,3 +1,13 @@
+## Summary
+
+Example of gRPC application between node and golang.
+
+This handle high CPU tasks by assiging it to a more performantic language (golang) to do the job.
+
+It queue pending jobs using Bull js and store the queue on Redis.
+
+Current list of complete jobs, pending and being processed can be accessed by websocket connection.
+
 ## Installation
 
 ```bash
@@ -29,8 +39,17 @@ protoc \
 --go_opt=paths=source_relative \
 --go-grpc_out=grpc/solver \
 --go-grpc_opt=paths=source_relative grpc/solver.proto
+```
+
+### Inside grpc folder
+
+just run
 
 ```
+go run main.go
+```
+
+To start go gRPC server
 
 ## Queue system with Bulljs - Redis
 
