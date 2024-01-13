@@ -6,8 +6,12 @@ export class SolverController {
   constructor(private readonly solverService: SolverService) {}
 
   @Get('nonce/:nonce')
-  solveNonce(@Param('nonce') nonce: string) {
+  addNonceToQueue(@Param('nonce') nonce: string) {
     return this.solverService.addNonce(+nonce);
+  }
+  @Get('nonce/priority/:nonce')
+  addNonceToPriorityQueue(@Param('nonce') nonce: string) {
+    return this.solverService.addHighPriorityNonce(+nonce);
   }
 
   @Get('queue/pending')

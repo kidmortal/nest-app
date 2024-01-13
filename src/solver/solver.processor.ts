@@ -13,7 +13,7 @@ export class SolverProcessor {
   async nonceSolver(job: Job<number>) {
     const nonce = job.data;
     const logger = new Logger('Solver Processor');
-    logger.debug(`solving nonce ${nonce}`);
+    logger.debug(`solving nonce ${nonce} - priority: ${job.opts.priority}`);
     const response = await this.solverGrpc.solveMonce(job.data);
     logger.debug(`nonce ${nonce} solved. Result: ${response.solution}`);
     return response;

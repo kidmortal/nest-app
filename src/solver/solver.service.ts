@@ -8,10 +8,18 @@ export class SolverService {
   constructor(@InjectQueue('solver') private SolverQueue: Queue) {}
 
   addNonce(nonce: number) {
-    this.SolverQueue.add('nonce', nonce);
+    this.SolverQueue.add('nonce', nonce, { priority: 2 });
     return {
       nonce,
       message: 'Added to queue',
+    };
+  }
+
+  addHighPriorityNonce(nonce: number) {
+    this.SolverQueue.add('nonce', nonce, { priority: 1 });
+    return {
+      nonce,
+      message: 'Added to high priority queue',
     };
   }
 
