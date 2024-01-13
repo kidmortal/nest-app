@@ -9,7 +9,7 @@ import { Server } from 'http';
 import { SolverService } from './solver.service';
 import { Logger } from '@nestjs/common';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class SolverGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
   wsClients: Socket[] = [];

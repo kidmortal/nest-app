@@ -1,4 +1,9 @@
-import { Processor, Process } from '@nestjs/bull';
+import {
+  Processor,
+  Process,
+  OnQueueCompleted,
+  OnQueueActive,
+} from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 
 import { Job } from 'bull';
@@ -9,6 +14,7 @@ import { SolverService } from './solver.service';
 
 @Processor('solver')
 export class SolverProcessor {
+  private logger = new Logger('Solver Processor');
   constructor(
     private solverGrpc: SolverGrpc,
     private solverWebsocket: SolverGateway,
@@ -18,12 +24,23 @@ export class SolverProcessor {
   @Process('nonce')
   async nonceSolver(job: Job<number>) {
     const nonce = job.data;
-    const logger = new Logger('Solver Processor');
-    logger.debug(`solving nonce ${nonce} - priority: ${job.opts.priority}`);
+    const response = await this.solverGrpc.solveMonce(job.data);
+    this.logger.debug(`nonce ${nonce} solved. Result: ${response.solution}`);
+    return response;
+  }
+
+  @OnQueueActive()
+  async onActive(job: Job) {
+    this.logger.debug(
+      `solving nonce ${job.data} - priority: ${job.opts.priority}`,
+    );
     const currentQueueState = await this.solverService.getQueueStateSummary();
     this.solverWebsocket.broadcast('queue_update', currentQueueState);
-    const response = await this.solverGrpc.solveMonce(job.data);
-    logger.debug(`nonce ${nonce} solved. Result: ${response.solution}`);
-    return response;
+  }
+
+  @OnQueueCompleted()
+  async onComplete() {
+    const currentQueueState = await this.solverService.getQueueStateSummary();
+    this.solverWebsocket.broadcast('queue_update', currentQueueState);
   }
 }
