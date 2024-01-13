@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { SolverService } from './solver.service';
 import { SolverController } from './solver.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { BullModule } from '@nestjs/bull';
+import { SolverProcessor } from './solver.processor';
 
 @Module({
   imports: [
@@ -16,8 +18,15 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
+    BullModule.registerQueue({
+      name: 'solver',
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
   ],
   controllers: [SolverController],
-  providers: [SolverService],
+  providers: [SolverService, SolverProcessor],
 })
 export class SolverModule {}

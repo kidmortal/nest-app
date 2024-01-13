@@ -7,6 +7,11 @@ export class SolverController {
 
   @Get('nonce/:nonce')
   solveNonce(@Param('nonce') nonce: string) {
-    return this.solverService.SolveNonce(+nonce);
+    return this.solverService.addNonce(+nonce);
+  }
+
+  @Get('queue')
+  getQueue() {
+    return this.solverService.getCurrentQueue();
   }
 }

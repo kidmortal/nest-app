@@ -1,21 +1,21 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Injectable } from '@nestjs/common';
 
-import { ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
-
-interface ISolverService {
-  SolveNonce({}): Observable<any>;
-}
+import { Queue } from 'bull';
 
 @Injectable()
-export class SolverService implements OnModuleInit {
-  private solver: ISolverService;
-  constructor(@Inject('SOLVER_PACKAGE') private client: ClientGrpc) {}
-  onModuleInit() {
-    this.solver = this.client.getService<ISolverService>('SolverService');
+export class SolverService {
+  constructor(@InjectQueue('solver') private SolverQueue: Queue) {}
+
+  addNonce(nonce: number) {
+    this.SolverQueue.add('nonce', nonce);
+    return {
+      nonce,
+      message: 'Added to queue',
+    };
   }
 
-  SolveNonce(nonce: number) {
-    return this.solver.SolveNonce(nonce);
+  getCurrentQueue() {
+    return this.SolverQueue.getJobs(['waiting']);
   }
 }
