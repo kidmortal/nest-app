@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.25.0
-// source: chain.proto
+// source: grpc/solver.proto
 
-package chain
+package solver
 
 import (
 	context "context"
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SolverService_SolveNonce_FullMethodName = "/chain.SolverService/SolveNonce"
+	SolverService_SolveNonce_FullMethodName = "/solver.SolverService/SolveNonce"
 )
 
 // SolverServiceClient is the client API for SolverService service.
@@ -96,7 +96,7 @@ func _SolverService_SolveNonce_Handler(srv interface{}, ctx context.Context, dec
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SolverService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chain.SolverService",
+	ServiceName: "solver.SolverService",
 	HandlerType: (*SolverServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -105,5 +105,5 @@ var SolverService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "chain.proto",
+	Metadata: "grpc/solver.proto",
 }

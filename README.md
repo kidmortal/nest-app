@@ -32,10 +32,14 @@ $ pnpm run test:cov
 
 ## gRPC server
 
+This project is currently using a go grpc server
+
+Generating grpc files
+
 ```
 protoc \
---go_out=grpc/chain \
+--go_out=grpc/solver \
 --go_opt=paths=source_relative \
---go-grpc_out=grpc/chain \
---go-grpc_opt=paths=source_relative grpc/chain.proto
+--go-grpc_out=grpc/solver \
+--go-grpc_opt=paths=source_relative grpc/solver.proto
 ```
