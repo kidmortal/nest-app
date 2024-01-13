@@ -2,7 +2,7 @@ import { Processor, Process } from '@nestjs/bull';
 import { Inject, Logger, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Job } from 'bull';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 
 interface ISolverService {
   SolveNonce({}): Observable<any>;
@@ -21,7 +21,8 @@ export class SolverProcessor implements OnModuleInit {
     const nonce = job.data;
     const logger = new Logger('Solver Processor');
     logger.debug(`solving nonce ${nonce}`);
-    const solution = this.solver.SolveNonce(job.data);
-    logger.debug(`nonce ${nonce} solved. Result: ${solution}`);
+    const response = await lastValueFrom(this.solver.SolveNonce(job.data));
+    logger.debug(`nonce ${nonce} solved. Result: ${response.solution}`);
+    return response;
   }
 }

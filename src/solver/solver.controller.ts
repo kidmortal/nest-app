@@ -10,8 +10,13 @@ export class SolverController {
     return this.solverService.addNonce(+nonce);
   }
 
-  @Get('queue')
-  getQueue() {
-    return this.solverService.getCurrentQueue();
+  @Get('queue/pending')
+  getQueuePending() {
+    return this.solverService.getCurrentQueuePending();
+  }
+
+  @Get('queue/complete')
+  getQueueComplete() {
+    return this.solverService.getCurrentQueueComplete();
   }
 }

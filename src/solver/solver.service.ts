@@ -15,7 +15,10 @@ export class SolverService {
     };
   }
 
-  getCurrentQueue() {
-    return this.SolverQueue.getJobs(['waiting']);
+  getCurrentQueuePending() {
+    return this.SolverQueue.getJobs(['waiting'], 0, 50);
+  }
+  getCurrentQueueComplete() {
+    return this.SolverQueue.getJobs(['completed'], 0, 50);
   }
 }
