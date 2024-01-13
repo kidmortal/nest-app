@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.25.0
-// source: grpc/solver.proto
+// source: solver.proto
 
 package solver
 
@@ -105,5 +105,5 @@ var SolverService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "grpc/solver.proto",
+	Metadata: "solver.proto",
 }
