@@ -10,7 +10,6 @@ import { Job } from 'bull';
 
 import { SolverGrpc } from './solver.grpc';
 import { SolverGateway } from './solver.gateway';
-import { SolverService } from './solver.service';
 
 @Processor('solver')
 export class SolverProcessor {
@@ -18,7 +17,6 @@ export class SolverProcessor {
   constructor(
     private solverGrpc: SolverGrpc,
     private solverWebsocket: SolverGateway,
-    private solverService: SolverService,
   ) {}
 
   @Process('nonce')
@@ -34,13 +32,11 @@ export class SolverProcessor {
     this.logger.debug(
       `solving nonce ${job.data} - priority: ${job.opts.priority}`,
     );
-    const currentQueueState = await this.solverService.getQueueStateSummary();
-    this.solverWebsocket.broadcast('queue_update', currentQueueState);
+    this.solverWebsocket.broadcastQueueStatus();
   }
 
   @OnQueueCompleted()
   async onComplete() {
-    const currentQueueState = await this.solverService.getQueueStateSummary();
-    this.solverWebsocket.broadcast('queue_update', currentQueueState);
+    this.solverWebsocket.broadcastQueueStatus();
   }
 }

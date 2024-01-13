@@ -17,6 +17,11 @@ export class SolverGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   constructor(private solverService: SolverService) {}
 
+  async broadcastQueueStatus() {
+    const status = await this.solverService.getQueueStateSummary();
+    this.broadcast('queue_update', status);
+  }
+
   broadcast(event, message: any) {
     for (const c of this.wsClients) {
       c.emit(event, message);
