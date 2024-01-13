@@ -4,6 +4,7 @@ import { SolverController } from './solver.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { BullModule } from '@nestjs/bull';
 import { SolverProcessor } from './solver.processor';
+import { SolverGrpc } from './solver.grpc';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { SolverProcessor } from './solver.processor';
     }),
   ],
   controllers: [SolverController],
-  providers: [SolverService, SolverProcessor],
+  providers: [SolverService, SolverProcessor, SolverGrpc],
 })
 export class SolverModule {}
