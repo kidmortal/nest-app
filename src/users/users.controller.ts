@@ -15,6 +15,23 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Throttle } from '@nestjs/throttler';
 import { ClientGrpc } from '@nestjs/microservices';
+import { createHash } from 'node:crypto';
+
+function mine(nonce: number) {
+  let solution = 1;
+  console.log('Mining...');
+
+  while (true) {
+    const hash = createHash('MD5');
+    hash.update((nonce + solution).toString()).end();
+    const attempt = hash.digest('hex');
+    if (attempt.substring(0, 6) === '000000') {
+      console.log(`Solved ${solution}`);
+      return solution;
+    }
+    solution += 1;
+  }
+}
 
 interface SolverService {
   SolveNonce({}): Observable<any>;
@@ -44,9 +61,15 @@ export class UsersController implements OnModuleInit {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne() {
-    return this.solver.SolveNonce(22222);
+  @Get('node/:id')
+  solveNode(@Param('id') id: string) {
+    const solution = mine(+id);
+    return this.solver.SolveNonce(solution);
+  }
+
+  @Get('go/:id')
+  findOne(@Param('id') id: string) {
+    return this.solver.SolveNonce(+id);
   }
 
   @Patch(':id')
