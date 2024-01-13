@@ -12,7 +12,7 @@ import (
 	"sync"
 
 	"google.golang.org/grpc"
-	pb "kidmortal.com/nest-app"
+	pb "kidmortal.com/nest-app/chain"
 )
 
 var (

@@ -6,15 +6,31 @@ import {
   Patch,
   Param,
   Delete,
+  Inject,
+  OnModuleInit,
 } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Throttle } from '@nestjs/throttler';
+import { ClientGrpc } from '@nestjs/microservices';
+
+interface SolverService {
+  SolveNonce({}): Observable<any>;
+}
 
 @Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+export class UsersController implements OnModuleInit {
+  private solver: SolverService;
+  constructor(
+    @Inject('CHAIN_PACKAGE') private client: ClientGrpc,
+    private readonly usersService: UsersService,
+  ) {}
+
+  onModuleInit() {
+    this.solver = this.client.getService<SolverService>('SolverService');
+  }
 
   @Throttle({ default: { limit: 2, ttl: 60000 } })
   @Post()
@@ -29,8 +45,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne() {
+    return this.solver.SolveNonce(22222);
   }
 
   @Patch(':id')
