@@ -17,19 +17,6 @@ $ pnpm dev
 $ pnpm start
 ```
 
-## Test
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
 ## gRPC server
 
 This project is currently using a go grpc server
@@ -42,4 +29,16 @@ protoc \
 --go_opt=paths=source_relative \
 --go-grpc_out=grpc/solver \
 --go-grpc_opt=paths=source_relative grpc/solver.proto
+
 ```
+
+## Queue system with Bulljs - Redis
+
+This apllication requires redis running on port 6379 (default)
+Used to manage queue
+
+## Api documentation - Swagger
+
+located at /api
+
+Auto generated documentation for all routes inside the application.
