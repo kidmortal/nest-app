@@ -32,4 +32,11 @@ export class SolverService {
   getCurrentQueueFailed() {
     return this.SolverQueue.getJobs(['failed'], 0, 50);
   }
+
+  async getQueueStateSummary() {
+    const active = await this.SolverQueue.getJobs(['active'], 0, 10);
+    const waiting = await this.SolverQueue.getJobs(['waiting'], 0, 10);
+    const complete = await this.SolverQueue.getJobs(['completed'], 0, 10);
+    return { active, waiting, complete };
+  }
 }
