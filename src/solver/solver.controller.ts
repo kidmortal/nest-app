@@ -19,4 +19,9 @@ export class SolverController {
   getQueueComplete() {
     return this.solverService.getCurrentQueueComplete();
   }
+
+  @Get('queue/failed')
+  getQueueFailed() {
+    return this.solverService.getCurrentQueueFailed();
+  }
 }

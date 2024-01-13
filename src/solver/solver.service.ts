@@ -21,4 +21,7 @@ export class SolverService {
   getCurrentQueueComplete() {
     return this.SolverQueue.getJobs(['completed'], 0, 50);
   }
+  getCurrentQueueFailed() {
+    return this.SolverQueue.getJobs(['failed'], 0, 50);
+  }
 }
