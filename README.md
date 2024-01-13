@@ -61,3 +61,12 @@ Used to manage queue
 located at /api
 
 Auto generated documentation for all routes inside the application.
+
+## Running with docker
+
+```bash
+# create image and containers
+docker-compose create
+# start server and services
+docker-compose start
+```
