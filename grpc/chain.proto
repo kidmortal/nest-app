@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package chain;
+
+option go_package = "kidmortal.com/kidcoin/chain";
+
+message Message {
+  int32 nonce = 1;
+}
+
+message Response {
+  int32 solution = 1;
+}
+
+service SolverService {
+  rpc SolveNonce(Message) returns (Response) {}
+}
