@@ -33,15 +33,15 @@ This project is currently using a go grpc server
 
 Generating grpc files
 
+Run this command **while inside grpc folder**
+
 ```
 protoc \
---go_out=grpc/solver \
+--go_out=solver/ \
 --go_opt=paths=source_relative \
---go-grpc_out=grpc/solver \
---go-grpc_opt=paths=source_relative grpc/solver.proto
+--go-grpc_out=solver/ \
+--go-grpc_opt=paths=source_relative solver.proto
 ```
-
-### Inside grpc folder
 
 just run
 

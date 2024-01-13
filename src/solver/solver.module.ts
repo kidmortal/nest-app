@@ -14,7 +14,7 @@ import { SolverGateway } from './solver.gateway';
         name: 'SOLVER_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'localhost:50051',
+          url: 'grpc:50051',
           package: 'solver',
           protoPath: './grpc/solver.proto',
         },
@@ -23,7 +23,7 @@ import { SolverGateway } from './solver.gateway';
     BullModule.registerQueue({
       name: 'solver',
       redis: {
-        host: 'localhost',
+        host: 'redis',
         port: 6379,
       },
     }),

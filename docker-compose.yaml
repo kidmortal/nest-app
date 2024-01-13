@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  redis:
+    container_name: redis
+    image: 'redis'
+    ports:
+      - '6379:6379'
+  grpc:
+    container_name: grpc
+    image: grpc
+    restart: on-failure
+    build: 
+      dockerfile: grpc/Dockerfile
+    ports:
+      - '50051:50051'
+  nestapp:
+    container_name: nestapp
+    image: nestapp
+    restart: on-failure
+    build: 
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - grpc
+    ports:
+      - '3000:3000'
+ 
