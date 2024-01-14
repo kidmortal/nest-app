@@ -9,8 +9,13 @@ It queue pending jobs using Bull js and store the queue on Redis.
 Current list of complete jobs, pending and being processed can be accessed by websocket connection.
 
 Use this route to add a number to be processed.
+![image](https://github.com/kidmortal/nest-app/assets/18023467/391bb876-336d-4fc9-a2ac-9e11a63adf81)
+
 
 and then you can watch the progress on the websocket client.
+
+![image](https://github.com/kidmortal/nest-app/assets/18023467/2dfad225-676f-4ae8-9cb8-1f7ad822b608)
+
 
 ## Installation
 
