@@ -70,3 +70,12 @@ docker-compose create
 # start server and services
 docker-compose start
 ```
+
+urls:
+
+```bash
+# server and api documentation
+http://localhost:8000/api
+# websocket client to see jobs being processed
+http://localhost:3000
+```
