@@ -5,6 +5,15 @@ services:
     image: 'redis'
     ports:
       - '6379:6379'
+  client:
+    container_name: websocket-client
+    image: websocket-client
+    restart: on-failure
+    build: 
+      context: websocket-client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80'
   grpc:
     container_name: grpc
     image: grpc
@@ -22,5 +31,5 @@ services:
     depends_on:
       - redis
     ports:
-      - '3000:3000'
+      - '8000:8000'
  
