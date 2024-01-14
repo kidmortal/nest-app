@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-
+import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { SolverModule } from './solver/solver.module';
 
@@ -12,7 +12,9 @@ import { SolverModule } from './solver/solver.module';
         limit: 30,
       },
     ]),
-
+    ConfigModule.forRoot({
+      envFilePath: '../env',
+    }),
     SolverModule,
   ],
   controllers: [],

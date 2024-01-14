@@ -26,6 +26,9 @@ services:
     container_name: nestapp
     image: nestapp
     restart: on-failure
+    environment:
+      - GRPC_URL=grpc
+      - REDIS_URL=redis
     build: 
       dockerfile: Dockerfile.server
     depends_on:
