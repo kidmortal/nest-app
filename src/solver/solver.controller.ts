@@ -2,6 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { SolverService } from './solver.service';
 import { SolverGateway } from './solver.gateway';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('Solver')
 @Controller('solver')
@@ -11,6 +12,7 @@ export class SolverController {
     private solverWebsocket: SolverGateway,
   ) {}
 
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   @ApiOperation({ summary: 'Adds a number to the queue to be processed' })
   @Get('nonce/:nonce')
   addNonceToQueue(@Param('nonce') nonce: number) {
@@ -18,6 +20,8 @@ export class SolverController {
     this.solverWebsocket.broadcastQueueStatus();
     return result;
   }
+
+  @Throttle({ default: { limit: 1, ttl: 60000 } })
   @ApiOperation({
     summary:
       'Adds a number to the queue to be processed but with high priority',
