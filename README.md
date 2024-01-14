@@ -4,6 +4,10 @@ Example of gRPC application between node and golang.
 
 This handle high CPU tasks by assiging it to a more performantic language (golang) to do the job.
 
+On this example, it will receive a number called nonce, and it will find what number added to it, that the hash value will start with 6 zeros in a row.
+
+Thats a very long calculation. so we using go to spread this job on multiple CPU cores.
+
 It queue pending jobs using Bull js and store the queue on Redis.
 
 Current list of complete jobs, pending and being processed can be accessed by websocket connection.
