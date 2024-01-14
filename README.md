@@ -8,6 +8,10 @@ It queue pending jobs using Bull js and store the queue on Redis.
 
 Current list of complete jobs, pending and being processed can be accessed by websocket connection.
 
+Use this route to add a number to be processed.
+
+and then you can watch the progress on the websocket client.
+
 ## Installation
 
 ```bash

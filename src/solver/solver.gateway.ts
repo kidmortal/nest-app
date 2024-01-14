@@ -27,7 +27,6 @@ export class SolverGateway implements OnGatewayConnection, OnGatewayDisconnect {
       c.emit(event, message);
     }
   }
-
   async handleConnection(client: Socket) {
     this.logger.debug(`socket ${client.id} connected`);
     this.wsClients.push(client);
